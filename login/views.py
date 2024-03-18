@@ -17,25 +17,37 @@ class AppLogin(APIView):
 
         if check_password(user_pw, user.user_pw):
             return Response(dict(msg="로그인 성공",
-                                 user_id=user.user_id,
-                                 birthday=user.birthday,
-                                 gender=user.gender,
-                                 email=user.email,
-                                 name=user.name,
-                                 age=user.age
+                                 user_id=user.user_id
+                                 # ,
+                                 # birthday=user.birthday,
+                                 # gender=user.gender,
+                                 # email=user.email,
+                                 # name=user.name,
+                                 # age=user.age
                                  ))
         else:
             return Response(dict(msg="로그인 실패, 비밀번호 틀림"))
 
 
+class AppLogout(APIView):
+    def post(self,request):
+        #로그아웃한 시간
+        return Response(status=200)
+
 # APIView를 상속 받으면 서브함수로 POST, GET 매핑에 따라 분리할 수 있다. Like Spring
 class RegistUser(APIView):
     def post(self, request):
-        serializer = LoginUserSerializer(request.data)
-
         # 동일한 UserId가 있는지 체크
-        if LoginUser.objects.filter(user_id=serializer.data['user_id']).exists():
-            user = LoginUser.objects.filter(user_id=serializer.data['user_id']).first()
+        user_id = request.data['user_id']
+        user_pw = request.data['user_pw']
+
+        if user_id == '' or user_id is None or user_pw == '' or user_pw is None:
+            return Response(dict(msg="빈 값은 아이디와 비밀번호가 될 수 없습니다."))
+
+        user_pw = make_password(user_pw)
+
+        if LoginUser.objects.filter(user_id=user_id).exists():
+            user = LoginUser.objects.filter(user_id=user_id).first()
             data = dict(
                 msg="이미 존재하는 데이터입니다.",
                 user_id=user.user_id,
@@ -43,6 +55,6 @@ class RegistUser(APIView):
             )
             return Response(data)
 
-        user = serializer.create(request.data)
-
-        return Response(data=LoginUserSerializer(user).data)
+        user = LoginUser.objects.create(user_id=user_id, user_pw=user_pw)
+        print(user)
+        return Response(data=dict(msg="회원가입에 성공했습니다.", user_id=user.user_id))
