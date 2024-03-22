@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'login',
     'to_doit',
     'corsheaders',
+    'common',
 ]
 
 MIDDLEWARE = [
