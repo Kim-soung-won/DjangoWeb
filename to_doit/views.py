@@ -3,12 +3,24 @@ from .models import Task
 from rest_framework.response import Response
 from datetime import datetime
 from common.common import TodoView, SuccessResponse, SuccessResponseWithData, ErrorResponse, CommonResponse
+import logging
+
+logger = logging.getLogger('django')
 
 
 class Test(TodoView):
     def post(self, request):
-        print("user_id =", self.user_id)
-        print("version =", self.version)
+        logger.info("TEST API START!!!!")
+        logger.info("user id = "+self.user_id)
+        logger.info("version = "+self.version)
+
+        output_value1 = self.user_id + self.version
+
+        logger.info("output_value1 = " + output_value1)
+
+
+        logger.info("TEST API END!!!!!!!!!!!")
+
         return Response(status=200)
 
 
