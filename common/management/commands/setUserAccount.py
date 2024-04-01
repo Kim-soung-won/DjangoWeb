@@ -17,16 +17,17 @@ class Command(BaseCommand):
                 user_password="testPwd"+str(i),
                 user_role="USER",
                 user_pnum="1234-1234",
-                last_login=random_datetime(start_date,end_date)
+                last_login=random_datetime()
             )
 
 
-def random_datetime(start_date, end_date):
+def random_datetime():
+    start_date = timezone.make_aware(datetime(2024, 3, 1))
+    end_date = timezone.make_aware(datetime(2024, 4, 5))
     delta = end_date - start_date
     random_second = random.randint(0, int(delta.total_seconds()))
     random_date = start_date + timedelta(seconds=random_second)
     return timezone.make_aware(random_date)
 
 
-start_date = timezone.make_aware(datetime(2024, 1, 1))
-end_date = timezone.make_aware(datetime(2024, 3, 31))
+

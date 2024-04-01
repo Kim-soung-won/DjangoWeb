@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="Django_DB" uuid="5c72906c-a852-4aa4-942b-fb15fbfd460d">
+    <data-source source="LOCAL" name="Shopping" uuid="5c72906c-a852-4aa4-942b-fb15fbfd460d">
       <driver-ref>mysql_aurora_aws</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>software.aws.rds.jdbc.mysql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql:aws://3.39.10.204:3306/?useSSL=false&amp;allowPublicKeyRetrieval=true</jdbc-url>
+      <jdbc-url>jdbc:mysql:aws://db-lsa9l-kr.vpc-pub-cdb.ntruss.com:3306/Mini_Shoppingmall?useSSL=false&amp;allowPublicKeyRetrieval=true</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="db.sqlite3" uuid="dc93769e-94f8-4d40-8fe2-ff37adb29641">
@@ -13,6 +13,15 @@
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db.sqlite3</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="Django default" uuid="73943352-67f2-486f-b356-127835a8aaeb">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>$PROJECT_DIR$/DjangoWeb/settings.py</remarks>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://db-lsa9l-kr.vpc-pub-cdb.ntruss.com:3306/Mini_Shoppingmall</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

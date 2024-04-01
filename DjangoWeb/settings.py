@@ -39,10 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'login',
-    'to_doit',
     'corsheaders',
     'common',
+    'Existing_db'
 ]
 
 MIDDLEWARE = [
@@ -81,24 +80,24 @@ WSGI_APPLICATION = 'DjangoWeb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'HOST': '3.39.10.204',
-#         'NAME': 'DjangoWeb',
-#         'USER': 'root',
-#         'PASSWORD': 'as3481611!',
-#         'PORT': '3306',
-#         'OPTIONS': {'charset': 'utf8mb4'},
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'db-lsa9l-kr.vpc-pub-cdb.ntruss.com',
+        'NAME': 'Mini_Shoppingmall',
+        'USER': 'rlatmddnjs0103',
+        'PASSWORD': 'as3481611!',
+        'PORT': '3306',
+        'OPTIONS': {'charset': 'utf8mb4'},
     }
 }
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'db.sqlite3',
+#     }
+# }
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True

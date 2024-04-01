@@ -82,3 +82,4 @@ INFO 2024-03-22 15:45:03,793 C:\Users\KIMSW\Desktop\project\DjangoWeb\to_doit\vi
 INFO 2024-03-22 15:45:03,793 C:\Users\KIMSW\Desktop\project\DjangoWeb\to_doit\views.py 22 TEST API END!!!!!!!!!!!
 INFO 2024-03-22 15:45:03,795 C:\Users\KIMSW\Desktop\project\DjangoWeb\.venv\lib\site-packages\django\core\servers\basehttp.py 212 "POST /todo/test HTTP/1.1" 200 0
 INFO 2024-03-25 14:45:22,669 C:\Users\KIMSW\Desktop\project\DjangoWeb\.venv\lib\site-packages\django\utils\autoreload.py 668 Watching for file changes with StatReloader
+INFO 2024-03-29 15:57:16,252 C:\Users\KIMSW\Desktop\project\DjangoWeb\.venv\lib\site-packages\django\utils\autoreload.py 668 Watching for file changes with StatReloader
