@@ -27,7 +27,7 @@ def random_datetime():
     delta = end_date - start_date
     random_second = random.randint(0, int(delta.total_seconds()))
     random_date = start_date + timedelta(seconds=random_second)
-    return timezone.make_aware(random_date)
+    return random_date
 
 
 

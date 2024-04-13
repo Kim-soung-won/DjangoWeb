@@ -8,14 +8,7 @@
       <jdbc-url>jdbc:mysql:aws://db-lsa9l-kr.vpc-pub-cdb.ntruss.com:3306/Mini_Shoppingmall?useSSL=false&amp;allowPublicKeyRetrieval=true</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="db.sqlite3" uuid="dc93769e-94f8-4d40-8fe2-ff37adb29641">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db.sqlite3</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="Django default" uuid="73943352-67f2-486f-b356-127835a8aaeb">
+    <data-source source="LOCAL" name="Django default" uuid="75e3f786-c511-4747-b7e7-3eeb728e63d0">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>

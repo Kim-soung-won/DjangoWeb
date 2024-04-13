@@ -91,6 +91,7 @@ DATABASES = {
         'OPTIONS': {'charset': 'utf8mb4'},
     }
 }
+
 #
 # DATABASES = {
 #     'default': {
