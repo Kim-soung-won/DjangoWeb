@@ -2,8 +2,7 @@ import random
 from django.db import transaction
 from Existing_db import models
 from django.core.management.base import BaseCommand
-from django.utils import timezone
-from datetime import timedelta, datetime
+from common.SettingDummyData.RandomDateTime import random_datetime
 
 
 class Command(BaseCommand):
@@ -57,10 +56,4 @@ class Command(BaseCommand):
         models.ProductDetail.objects.bulk_update(to_update, ['pd_sell_count'])
 
 
-def random_datetime():
-    start_date = timezone.make_aware(datetime(2024, 1, 1, 0, 0, 0))
-    end_date = timezone.make_aware(datetime(2024, 4, 1, 23, 59, 59))
-    delta = end_date - start_date
-    random_second = random.randint(0, int(delta.total_seconds()))
-    random_date = start_date + timedelta(seconds=random_second)
-    return random_date
+

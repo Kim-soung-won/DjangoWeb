@@ -5,6 +5,8 @@ from django.db import transaction
 from Existing_db import models
 import random
 
+from common.SettingDummyData.RandomDateTime import random_datetime
+
 
 class Command(BaseCommand):
     @transaction.atomic
@@ -39,11 +41,3 @@ class Command(BaseCommand):
             to_create.append(product)
         models.Product.objects.bulk_create(to_create)
 
-
-def random_datetime():
-    start_date = timezone.make_aware(datetime(2024, 3, 1))
-    end_date = timezone.make_aware(datetime(2024, 4, 5))
-    delta = end_date - start_date
-    random_second = random.randint(0, int(delta.total_seconds()))
-    random_date = start_date + timedelta(seconds=random_second)
-    return random_date

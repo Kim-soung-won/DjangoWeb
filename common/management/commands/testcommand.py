@@ -4,6 +4,7 @@ from django.utils import timezone
 from datetime import timedelta, datetime
 import random
 from Existing_db import models
+from common.SettingDummyData.RandomDateTime import random_datetime
 
 
 class Command(BaseCommand):
@@ -17,16 +18,6 @@ class Command(BaseCommand):
                 user_password="testPwd"+str(i),
                 user_role="USER",
                 user_pnum="1234-1234",
-                last_login=random_datetime(start_date,end_date)
+                last_login=random_datetime()
             )
 
-
-def random_datetime(start_date, end_date):
-    delta = end_date - start_date
-    random_second = random.randint(0, int(delta.total_seconds()))
-    random_date = start_date + timedelta(seconds=random_second)
-    return timezone.make_aware(random_date)
-
-
-start_date = timezone.make_aware(datetime(2024, 1, 1))
-end_date = timezone.make_aware(datetime(2024, 3, 31))
