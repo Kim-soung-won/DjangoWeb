@@ -1,5 +1,5 @@
 /common/cosine_sim.pickle
 /common/product.pickle
 /common/products.csv
-/logs
+/logs/*.log
 /templates

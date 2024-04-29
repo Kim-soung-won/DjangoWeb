@@ -41,8 +41,17 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'common',
-    'Existing_db'
+    'Existing_db',
+    # APScheduler 라이브러리 추가
+    'django_apscheduler'
 ]
+
+# 시간 형식 지정 ex)2024-01-31 23:59:59
+APSCHEDULER_DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
+# 작업 타임아웃을 3600초 즉 1시간으로 측정
+APSCHEDULER_RUN_NOW_TIMEOUT = 60*60
+# django_apscheduler의 기본 스케줄러 사용 여부 선택
+SCHEDULER_DEFAULT = True
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
