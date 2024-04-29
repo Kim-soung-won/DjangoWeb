@@ -12,6 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         users = models.UserAccount.objects.all()
         compare_date = timezone.make_aware(datetime(2024,3,30))
+        test = 0
         for i in range(1,5000):
             user = models.UserAccount.objects.create(
                 user_email="test"+str(i),
