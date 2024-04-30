@@ -112,9 +112,9 @@ class Migration(migrations.Migration):
             name='Product',
             fields=[
                 ('product_id', models.BigAutoField(primary_key=True, serialize=False)),
-                ('pd_name', models.CharField(max_length=100)),
-                ('pd_price', models.IntegerField()),
-                ('pd_category', models.TextField(blank=True, null=True)),
+                ('product_name', models.CharField(max_length=100)),
+                ('product_price', models.IntegerField()),
+                ('product_category', models.TextField(blank=True, null=True)),
                 ('created_at', models.DateTimeField(blank=True, null=True)),
                 ('count_love', models.IntegerField(blank=True, null=True)),
             ],

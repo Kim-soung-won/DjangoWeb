@@ -29,7 +29,7 @@ class Command(BaseCommand):
                 created_who=user,
                 product_id=product.product_id,
                 count=count,
-                total_price=product.pd_price * count,
+                total_price=product.product_price * count,
                 size=product_detail.size,
                 created_at=at
             )

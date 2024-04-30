@@ -18,16 +18,16 @@ class Command(BaseCommand):
             with open(output_csv_file_path, mode='w', newline='', encoding='utf-8') as file:
                 writer = csv.writer(file)
 
-                writer.writerow(['product_id', 'pd_name', 'pd_price', 'brand_id', 'pd_category'
+                writer.writerow(['product_id', 'product_name', 'product_price', 'brand_id', 'product_category'
                                     , 'created_who', 'created_at', 'count_love'])
 
                 for instance in products:
                     writer.writerow([
                         getattr(instance, 'product_id'),
-                        getattr(instance, 'pd_name'),
-                        getattr(instance, 'pd_price'),
+                        getattr(instance, 'product_name'),
+                        getattr(instance, 'product_price'),
                         getattr(instance, 'brand_id'),
-                        getattr(instance, 'pd_category'),
+                        getattr(instance, 'product_category'),
                         getattr(instance, 'created_who'),
                         getattr(instance, 'created_at'),
                         getattr(instance, 'count_love')

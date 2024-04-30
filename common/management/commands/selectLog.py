@@ -39,7 +39,7 @@ class Command(BaseCommand):
                     if log.product_id is None:
                         continue
                     product = models.Product.objects.get(product_id=log.product_id)
-                    categories.append(product.pd_category)
+                    categories.append(product.product_category)
                 category_str = ",".join(categories)
 
                 indices = pd.Series(products.index, index=products['product_id']).drop_duplicates()
@@ -60,7 +60,7 @@ class Command(BaseCommand):
 def get_recommend(category, products, consine_sim, indices):
     # category에 기반하여 벡터화
     tfidf = CountVectorizer()
-    tfidf_matrix = tfidf.fit_transform(products['pd_category'])
+    tfidf_matrix = tfidf.fit_transform(products['product_category'])
 
     # 입력된 category도 같은 vectorizer를 활용해 변환
     category_vector = tfidf.transform([category])

@@ -32,12 +32,12 @@ class Command(BaseCommand):
             for j in range(10):
                 category += random.choice(categorys[j])+","
             product = models.Product(product_id=i,
-                                     pd_name=str(i)+"번옷",
+                                     product_name=str(i)+"번옷",
                                      brand_id=random.randint(1,10),
                                      created_at=random_datetime(),
                                      price=random.randint(10000,500000),
                                      created_who=11,
-                                     pd_category=category)
+                                     product_category=category)
             to_create.append(product)
         models.Product.objects.bulk_create(to_create)
 

@@ -87,9 +87,9 @@ class CustomerService(models.Model):
     created_at = models.DateTimeField(blank=True, null=True)
     created_who = models.ForeignKey('UserInfo', models.DO_NOTHING, db_column='created_who', blank=True, null=True)
     cs_id = models.BigAutoField(primary_key=True)
-    category = models.CharField(max_length=255, blank=True, null=True)
+    payment_id = models.BigIntegerField()
     content = models.CharField(max_length=255, blank=True, null=True)
-    state = models.CharField(max_length=8, blank=True, null=True)
+    state = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -99,7 +99,7 @@ class CustomerService(models.Model):
 class Delivery(models.Model):
     created_at = models.DateTimeField(blank=True, null=True)
     delivery_id = models.BigAutoField(primary_key=True)
-    payment = models.OneToOneField('Payment', models.DO_NOTHING)
+    payment = models.OneToOneField('Payment', models.DO_NOTHING, blank=True, null=True)
     updated_at = models.DateTimeField(blank=True, null=True)
     tg_address = models.CharField(max_length=255)
     tg_pnum = models.CharField(max_length=255)
@@ -129,6 +129,7 @@ class Payment(models.Model):
     payment_id = models.BigAutoField(primary_key=True)
     product = models.ForeignKey('Product', models.DO_NOTHING, blank=True, null=True)
     size = models.CharField(max_length=255, blank=True, null=True)
+    delivery_id = models.BigIntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -137,13 +138,13 @@ class Payment(models.Model):
 
 class Product(models.Model):
     count_love = models.IntegerField(blank=True, null=True)
-    pd_price = models.IntegerField(blank=True, null=True)
+    product_price = models.IntegerField(blank=True, null=True)
     brand = models.ForeignKey(Brand, models.DO_NOTHING, blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
     created_who = models.ForeignKey('UserInfo', models.DO_NOTHING, db_column='created_who', blank=True, null=True)
     product_id = models.BigAutoField(primary_key=True)
-    pd_category = models.CharField(max_length=255, blank=True, null=True)
-    pd_name = models.CharField(max_length=255)
+    product_category = models.CharField(max_length=255, blank=True, null=True)
+    product_name = models.CharField(max_length=255)
     product_img = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
@@ -202,7 +203,7 @@ class UserAccount(models.Model):
     user_id = models.BigAutoField(primary_key=True)
     user_email = models.CharField(unique=True, max_length=100)
     user_password = models.CharField(max_length=100)
-    user_role = models.CharField(max_length=7, blank=True, null=True)
+    user_role = models.CharField(max_length=20, blank=True, null=True)
     user_pnum = models.CharField(max_length=20)
     last_login = models.DateTimeField(blank=True, null=True)
 

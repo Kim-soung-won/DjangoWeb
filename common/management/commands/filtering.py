@@ -17,14 +17,14 @@ class Command(BaseCommand):
             df1 = pd.read_csv('common/products.csv', encoding='utf-8')
 
             tfidf = CountVectorizer()
-            tfidf_matrix = tfidf.fit_transform(df1['pd_category'])
+            tfidf_matrix = tfidf.fit_transform(df1['product_category'])
 
             cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
 
             indices = pd.Series(df1.index, index=df1['product_id']).drop_duplicates()
             print(indices)
 
-            products = df1[['product_id', 'pd_category']].copy()
+            products = df1[['product_id', 'product_category']].copy()
             pickle.dump(products, open('common/product.pickle', 'wb'))
             pickle.dump(cosine_sim, open('common/cosine_sim.pickle', 'wb'))
             self.stdout.write(self.style.SUCCESS('Filterring Successfully'))
