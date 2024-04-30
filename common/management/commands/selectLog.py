@@ -32,7 +32,7 @@ class Command(BaseCommand):
                     reco = recommends.get(created_who=user.user_id)
                 except models.Recommend.DoesNotExist:
                     # Recommend 객체가 없는 경우 새로운 객체 생성
-                    reco = models.Recommend(created_who=user, product_list="")
+                    reco = models.Recommend(created_who=user.user_id, product_list="")
                 categories = []
                 logs = models.UserLog.objects.filter(created_who=user.user_id)
                 for log in logs:
