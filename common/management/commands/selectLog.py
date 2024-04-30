@@ -16,38 +16,39 @@ logger = logging.getLogger('django')
 class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **options):
+        product_pickes = pickle.load(open('common/product.pickle', 'rb'))
+        cosine_sim = pickle.load(open('common/cosine_sim.pickle', 'rb'))
         try:
             logger.info("Start Set Recommend")
             today = timezone.now().date()
             start_of_yesterday = datetime.combine(today, time.min).replace(tzinfo=timezone.utc)
             end_of_yesterday = datetime.combine(today, time.max).replace(tzinfo=timezone.utc)
             users = models.UserAccount.objects.filter(last_login__range=(start_of_yesterday, end_of_yesterday))
-            recommends = models.Recommend.objects.filter(created_who__in=users)
+            users = models.UserInfo.objects.filter(user_id__in=users)
+            recommends = {reco.created_who_id: reco for reco in models.Recommend.objects.filter(created_who__in=users)}
             to_update = []
-            products = pickle.load(open('common/product.pickle', 'rb'))
-            cosine_sim = pickle.load(open('common/cosine_sim.pickle', 'rb'))
+            to_create = []
             for user in users:
                 logger.info("Today Login User {}".format(user.user_id))
-                try:
-                    reco = recommends.get(created_who=user.user_id)
-                except models.Recommend.DoesNotExist:
+                reco = recommends.get(user.user_id)
+                if reco is None:
                     # Recommend 객체가 없는 경우 새로운 객체 생성
-                    reco = models.Recommend(created_who=user.user_id, product_list="")
-                categories = []
-                logs = models.UserLog.objects.filter(created_who=user.user_id)
-                for log in logs:
-                    if log.product_id is None:
-                        continue
-                    product = models.Product.objects.get(product_id=log.product_id)
-                    categories.append(product.product_category)
+                    create_reco = models.Recommend(created_who=user, product_list="")
+                    to_create.append(create_reco)
+                # None이 아닌 모든 product_id를 추출한다.
+                product_ids = models.UserLog.objects.filter(created_who=user.user_id).exclude(
+                    # 필터링 된 결과에서 product_id 필드 값을 리스트 형태로 추출한다.
+                    # flat옵션을 통해 결과를 하나의 List로 평탄화하여 반환한다. True가 없다면 튜플들의 리스트 형태로 반환된다.
+                    product_id=None).values_list('product_id', flat=True)
+                products = models.Product.objects.filter(product_id__in=product_ids)
+                categories = [product.product_category for product in products]
                 category_str = ",".join(categories)
 
-                indices = pd.Series(products.index, index=products['product_id']).drop_duplicates()
-
-                recommended_products = get_recommend(category_str, products, cosine_sim, indices)
+                recommended_products = get_recommend(category_str, product_pickes, cosine_sim)
                 recommended_str = ",".join([str(product) for product in recommended_products])
                 reco.product_list = recommended_str
                 to_update.append(reco)
+            models.Recommend.objects.bulk_create(to_create)
             models.Recommend.objects.bulk_update(to_update, ['product_list'])
             self.stdout.write(self.style.SUCCESS('Successfully'))
             logger.info("SET User recommend Successfully")
@@ -57,22 +58,24 @@ class Command(BaseCommand):
             logger.error(error_message)
 
 
-def get_recommend(category, products, consine_sim, indices):
+def get_recommend(category, product_pickes, consine_sim):
     # category에 기반하여 벡터화
     tfidf = CountVectorizer()
-    tfidf_matrix = tfidf.fit_transform(products['product_category'])
+    tfidf_matrix = tfidf.fit_transform(product_pickes['product_category'])
 
     # 입력된 category도 같은 vectorizer를 활용해 변환
     category_vector = tfidf.transform([category])
 
-    # 입력된 category와 모든 products 간의 코사인 유사도 계산
-    consine_sim = linear_kernel(category_vector, tfidf_matrix)
+    try:
+        idx = product_pickes[product_pickes['product_category'] == category].index[0]
+    except IndexError:
+        return []
 
     # 유사도를 기준으로 상위 10개 products를 추천
-    sim_scores = list(enumerate(consine_sim[0]))
+    sim_scores = list(enumerate(consine_sim[idx]))
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
     sim_scores = sim_scores[1:31]
 
     product_indices = [i[0] for i in sim_scores]
 
-    return products['product_id'].iloc[product_indices]
+    return product_pickes['product_id'].iloc[product_indices]
