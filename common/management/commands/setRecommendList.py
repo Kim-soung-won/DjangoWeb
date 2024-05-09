@@ -1,6 +1,5 @@
 from collections import Counter
 
-import pandas as pd
 import pickle
 from django.core.management.base import BaseCommand
 from django.db import transaction
@@ -8,8 +7,7 @@ from Existing_db import models
 from sklearn.metrics.pairwise import linear_kernel
 from sklearn.feature_extraction.text import CountVectorizer
 from django.utils import timezone
-from datetime import timedelta, datetime, time
-from time import time as timecheck
+from datetime import datetime, time
 import logging
 
 logger = logging.getLogger('django')
@@ -49,9 +47,6 @@ class Command(BaseCommand):
                 products = models.Product.objects.filter(product_id__in=product_ids)
                 categories = [product.product_category for product in products]
                 category_str = ",".join(categories)
-                category_count = Counter(categories)
-                print(user.user_id)
-                print(category_count)
 
                 recommended_products = get_recommend(category_str, product_pickes, tfidf, tfidf_matrix)
                 recommended_str = ",".join([str(product) for product in recommended_products])
